@@ -1227,7 +1227,7 @@ def _write_json_blob(encoded_value):
 
   Returns:
     The blobstore.BlobKey for the file that was created.
-  """
+  """  
   file_name = files.blobstore.create(mime_type='application/json')
   handle = files.open(file_name, 'a')
   try:
@@ -1241,8 +1241,8 @@ def _write_json_blob(encoded_value):
 
   files.finalize(file_name)
   return files.blobstore.get_blob_key(file_name)
-
-
+  
+  
 def _dereference_args(pipeline_name, args, kwargs):
   """Dereference a Pipeline's arguments that are slots, validating them.
 
@@ -2850,9 +2850,9 @@ def _get_timestamp_ms(when):
   """
   if when is None:
     return None
-  ms_since_epoch = float(time.mktime(when.utctimetuple()) * 1000.0)
-  ms_since_epoch += when.microsecond / 1000.0
-  return int(ms_since_epoch)
+  epoch = datetime.datetime.utcfromtimestamp(0)
+  delta = when - epoch
+  return int(delta.total_seconds() * 1000)
 
 
 def _get_internal_status(pipeline_key=None,
